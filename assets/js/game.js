@@ -7,7 +7,11 @@ var enemyNames =["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth=50;
 var enemyAttack=12;
 
-
+var randomNumber = function(min,max) {
+    var value = Math.floor(Math.random() * (max - min + 1)) + min;
+  
+    return value;
+  };
 
 var fight = function(enemyName)  {
     while(playerHealth > 0 && enemyHealth > 0) {
@@ -19,13 +23,13 @@ var fight = function(enemyName)  {
         
             if (confirmSkip) {
             window.alert(playerName + " has decided to skip this fight. Goodbye!");
-            playerMoney = playerMoney - 10;
+            playerMoney = Math.max(0, playerMoney - 10);
             console.log("playerMoney", playerMoney); 
             break; 
             } 
         }
         
-    enemyHealth = enemyHealth - playerAttack;
+    enemyHealth = Math.max(0, enemyHealth - playerAttack);
         console.log(playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining.");
         
         if (enemyHealth <= 0) {
@@ -36,7 +40,7 @@ var fight = function(enemyName)  {
             window.alert(enemyName + " still has " + enemyHealth + " health left.");
         }
 
-    playerHealth= playerHealth - enemyAttack;
+    playerHealth= Math.max(0, playerHealth - enemyAttack);
     console.log(enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining.");
 
         if (playerHealth <= 0) {
@@ -49,7 +53,6 @@ var fight = function(enemyName)  {
     } 
 }; 
 
-
 var startGame = function() {
     playerHealth = 100;
     playerAttack = 10;
@@ -61,7 +64,7 @@ var startGame = function() {
     if(playerHealth > 0){
         window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ));
         var pickedEnemyName = enemyNames[i]; 
-        enemyHealth = 50;
+        enemyHealth = randomNumber(40,60);
         fight(pickedEnemyName);
         
         if (playerHealth > 0 && i < enemyNames.length -1) {
@@ -100,6 +103,8 @@ var playAgainConfirm = window.confirm("Would you like to play again?");
         window.alert("Thank you for playing Robot Gladiators! Come back soon!");
     }
 }
+
+
 var shop = function() {
     var shopOptionPrompt = window.prompt("Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice.");
 
